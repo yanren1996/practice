@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>hello_react</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- 使用 JSX -->
+  <script type="text/babel">
+    const VDOM = <h1>Hello, React!</h1>
+    ReactDOM.render(VDOM, document.getElementById('root'));
+  </script>
+
+  <!-- 不使用 JSX 的方式 (巢狀結構時才會體現麻煩) -->
+  <!-- <script type="text/javascript">
+    const VDOM = React.createElement('h1', {}, 'Hello, React!');
+    ReactDOM.render(VDOM, document.getElementById('root'));
+  </script> -->
+</body>
+
+</html>
