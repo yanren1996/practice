@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>類式組件的state</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!--
+    1. 直接修改this.state時，React並不曉得所以不會重新幫你執行render()，畫面也就不會更新，必須使用父類的setState()進行變更
+    2. setState()是合併操作，不會覆蓋其他屬性，也就是其背後原理為 this.state = {...this.state, isHot:!isHot}
+  -->
+  <script type="text/babel">
+    class Weather extends React.Component {
+      state = { isHot: false };
+
+      handleClick = () => {
+        this.setState({ isHot: !this.state.isHot });
+      }
+
+      render() {
+        return <h1 onClick={this.handleClick}>今天天氣很{this.state.isHot ? '炎熱' : '涼爽'}</h1>
+      }
+    }
+
+    ReactDOM.render(<Weather />, document.getElementById('root'));
+  </script>
+
+</body>
+
+</html>

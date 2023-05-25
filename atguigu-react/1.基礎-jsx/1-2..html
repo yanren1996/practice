@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>list</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- 
+    1. jsx裡大括號內只能寫表達式，不能寫敘述(簡易分辨:表達式可以賦值到一個變數身上，敘述則不行)
+    2. 列表中需要加入key，好讓React辨識與管理
+  -->
+  <script type="text/babel">
+    const data = [
+      { id: 1, name: 'Angular' },
+      { id: 2, name: 'React' },
+      { id: 3, name: 'Vue' }
+    ];
+
+    const VDOM = (
+      <div>
+        <h1>前端js框架列表</h1>
+        <ul>
+          {data.map(item => <li key={item.id}>{item.name}</li>)}
+        </ul>
+      </div>
+    )
+
+    ReactDOM.render(VDOM, document.getElementById('root'));
+  </script>
+
+</body>
+
+</html>
