@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>類式組件的refs</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- 標示ref可以被react拿到真實DOM的節點 -->
+  <script type="text/babel">
+    class Demo extends React.Component {
+      showData = () => {
+        const { text1, input1 } = this.refs;
+        console.log(text1.innerText);
+        console.log(input1.value);
+      }
+      render() {
+        return (
+          <div>
+            <p ref="text1">某一段文字</p>
+            <input ref="input1" type="text" />
+            <button onClick={this.showData}>點擊印出ref</button>
+          </div>
+        )
+      }
+    }
+    class Demo2 extends React.Component {
+      showData = () => {
+        console.log(text1.innerText);
+        console.log(input1.value);
+      }
+      render() {
+        return (
+          <div>
+            <p ref={c => this.text1 = c}>某一段文字</p>
+            <input ref={c => this.input1 = c} type="text" />
+            <button onClick={this.showData}>點擊印出ref</button>
+          </div>
+        )
+      }
+    }
+
+    // 官方不推薦使用string方法(可能產生效能問題)
+    // ReactDOM.render(<Demo />, document.getElementById('root'));
+    ReactDOM.render(<Demo2 />, document.getElementById('root'));
+  </script>
+
+</body>
+
+</html>

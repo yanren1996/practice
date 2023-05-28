@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>類式組件的props</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- 用來警告 "prop輸入型態錯誤" 的套件 -->
+  <script crossorigin src="https://unpkg.com/prop-types@15.8.1/prop-types.js"></script>
+
+  <script type="text/babel">
+
+    class Person extends React.Component {
+      // prpoTypes資料檢查與defaultProps預設值也可以放在類別內部，用static
+      render() {
+        const { name, age, sex } = this.props;
+        return (
+          <ul>
+            <li>姓名:{name}</li>
+            <li>年齡:{age}</li>
+            <li>性別:{sex}</li>
+          </ul>
+        );
+      }
+    }
+
+    // 檢查資料型態，錯誤則console內警告(開發環境包才會出現，有min那包不會)
+    Person.propTypes = {
+      name: PropTypes.string.isRequired,
+      age: PropTypes.number,
+      sex: PropTypes.string
+    };
+
+    // (若為空時)設定預設值
+    Person.defaultProps = {
+      age: 18,
+      sex: '不男不女'
+    }
+
+    class Demo extends React.Component {
+      render() {
+        const data = { name: '小花', age: 25, sex: '女' };
+        const dataArr = [
+          { key: 1, name: '小豬', sex: '女' },
+          { key: 2, name: '小羊', age: 3, sex: '男' },
+          { key: 3, name: '小雞' },       // 使用預設
+          { key: 4, age: '咳', sex: 80 }  // 錯誤型態
+        ];
+
+        return (
+          <>
+            <Person name='小明' age='20' sex='男' />
+            {/*下面這是babel+React時特別允許的展開物件屬性到標籤屬性的方式，大括號代表js表達式而非物件的邊界*/}
+            <Person {...data} />
+            {dataArr.map(item => <Person {...item} />)}
+          </>
+        );
+      }
+    }
+
+    ReactDOM.render(<Demo />, document.getElementById('root'));
+  </script>
+
+</body>
+
+</html>
