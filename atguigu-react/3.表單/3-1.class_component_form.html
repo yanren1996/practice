@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>類式組件表單</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    class Login extends React.Component {
+      state = {
+        userName: '',
+        password: ''
+      }
+      saveUserName = (event) => {
+        this.setState({ userName: event.target.value })
+      }
+      savePassword = (event) => {
+        this.setState({ password: event.target.value })
+      }
+      handleSubmit = (event) => {
+        event.preventDefault();
+        const { userName, password } = this.state;
+        alert(`帳號:${userName},密碼${password}`);
+      }
+      render() {
+        return (
+          <form onSubmit={this.handleSubmit}>
+            <label>帳號<input onChange={this.saveUserName} type="text" /></label>
+            <label>密碼<input onChange={this.savePassword} type="password" /></label>
+            <button>提交</button>
+          </form>
+        );
+      }
+    }
+    // 優化Login後
+    class Login2 extends React.Component {
+      state = {
+        userName: '',
+        password: ''
+      }
+      saveFormData = (event) => {
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
+      }
+      handleSubmit = (event) => {
+        event.preventDefault();
+        const { userName, password } = this.state;
+        alert(`帳號:${userName},密碼${password}`);
+      }
+      render() {
+        return (
+          <form onSubmit={this.handleSubmit}>
+            <label>帳號<input onChange={this.saveFormData} name="userName" type="text" /></label>
+            <label>密碼<input onChange={this.saveFormData} name="password" type="password" /></label>
+            <button>提交</button>
+          </form>
+        );
+      }
+    }
+    ReactDOM.render(<Login2 />, document.getElementById('root'));
+  </script>
+
+</body>
+
+</html>

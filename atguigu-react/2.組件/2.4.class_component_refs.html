@@ -15,6 +15,7 @@
 
   <!-- 標示ref可以被react拿到真實DOM的節點 -->
   <script type="text/babel">
+    // 官方不推薦使用string方法(可能產生效能問題)
     class Demo extends React.Component {
       showData = () => {
         const { text1, input1 } = this.refs;
@@ -31,24 +32,27 @@
         )
       }
     }
+    // callback的refs有兩種做法，其中內連函式會在狀態變更時反覆執行
     class Demo2 extends React.Component {
       showData = () => {
+        const { text1, input1 } = this;
         console.log(text1.innerText);
         console.log(input1.value);
+      }
+      saveInput = (c) => {
+        this.input1 = c;
       }
       render() {
         return (
           <div>
             <p ref={c => this.text1 = c}>某一段文字</p>
-            <input ref={c => this.input1 = c} type="text" />
+            <input ref={this.saveInput} type="text" />
             <button onClick={this.showData}>點擊印出ref</button>
           </div>
         )
       }
     }
 
-    // 官方不推薦使用string方法(可能產生效能問題)
-    // ReactDOM.render(<Demo />, document.getElementById('root'));
     ReactDOM.render(<Demo2 />, document.getElementById('root'));
   </script>
 
