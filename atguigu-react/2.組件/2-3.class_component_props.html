@@ -59,7 +59,9 @@
             <Person name='小明' age='20' sex='男' />
             {/*下面這是babel+React時特別允許的展開物件屬性到標籤屬性的方式，大括號代表js表達式而非物件的邊界*/}
             <Person {...data} />
-            {dataArr.map(item => <Person {...item} />)}
+            {dataArr.map(item =>
+              <Person {...item} />
+            )}
           </>
         );
       }

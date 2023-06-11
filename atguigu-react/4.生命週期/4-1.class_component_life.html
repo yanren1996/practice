@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>生命週期</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@16.8.0/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16.8.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    class Life extends React.Component {
+
+      constructor(props) {
+        console.log('constructor');
+        super(props);
+        this.state = { sum: 0 };
+      }
+
+      componentWillMount() {
+        console.log('componentWillunt--組件將要掛載')
+      }
+
+      componentDidMount() {
+        console.log('componentDidMount--組件掛載後');
+      }
+
+      componentWillUpdate() {
+        console.log('componentWillUpdate--組件將要更新');
+      }
+
+      componentDidUpdate() {
+        console.log('componentDidUpdate--組件更新後');
+      }
+
+      componentWillUnmount() {
+        console.log('componentWillUnmont--組件將要卸載');
+      }
+
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+      }
+
+      add = () => {
+        const { sum } = this.state;
+        this.setState({ sum: sum + 1 });
+      }
+
+      render() {
+        console.log('render');
+        return (
+          <>
+            <h1>求和:{this.state.sum}</h1>
+            <button onClick={this.add}>+1</button>
+            <button onClick={this.death}>卸載組件</button>
+          </>
+        );
+      }
+    }
+    ReactDOM.render(<Life />, document.getElementById('root'));
+  </script>
+
+</body>
+
+</html>
